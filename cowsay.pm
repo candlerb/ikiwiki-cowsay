@@ -60,11 +60,11 @@ our %STATE_FLAGS = (
 sub preprocess {
     my %params=@_;
     error("Missing text") unless $params{text};
-    my @cmd = ($params{action} eq "think" ? "cowthink" : "cowsay");
-    push @cmd, $STATE_FLAGS{$params{state}} if $STATE_FLAGS{$params{state}};
+    my @cmd = (defined $params{action} && $params{action} eq "think" ? "cowthink" : "cowsay");
+    push @cmd, $STATE_FLAGS{$params{state}} if defined $params{state} && $STATE_FLAGS{$params{state}};
     push @cmd, "-e", $params{eyes} if defined $params{eyes};
     push @cmd, "-T", $params{tongue} if defined $params{tongue};
-    push @cmd, "-f", $params{type} if $params{type} =~ /\A[a-z0-9.-]+\z/;
+    push @cmd, "-f", $params{type} if defined $params{type} && $params{type} =~ /\A[a-z0-9.-]+\z/;
     my $pid = open2(*IN, *OUT, @cmd);
     print OUT $params{text};
     close OUT;
