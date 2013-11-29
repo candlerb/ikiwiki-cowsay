@@ -1,4 +1,3 @@
-#!/usr/bin/perl -w
 # cowsay - a simple preprocessor for cows.
 #
 # Copyright © Brian Candler <b.candler@pobox.com>
